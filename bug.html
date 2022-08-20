@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="initial-scale=1.0,width=device-width" />
+<title>Bug Squasher</title>
+<script src="https://kit.fontawesome.com/cfbb596513.js" crossorigin="anonymous"></script>
+<style type="text/css">
+body{
+margin:2.94117647058% 4.411764705882%; /*10px/340px  && 15px/340px*/
+width:94.44444444444%; /*340px/360px*/
+height:100%;
+text-align:center;
+font-family:cursive;
+font-size:1.25em; /*20px/16px(mostly the browser's default font-size*/
+overflow-wrap:break-word;
+background:#c2b280;
+}
+@media all and (min-width: 600px) {
+ body{
+ margin:0 auto;
+ font-size:2em; /*30px/16px*/
+ }
+}
+#timer{
+text-align:left;
+font-size:0.8em; /*16px/20px(body's font-size)*/
+padding-left:1.4705882352%; /*5px/340px*/
+}
+#score{
+text-align:right;
+padding-right:8.82352941176%; /*30px/340px*/
+font-size:0.8em; /*16px/20px(body's font-size)*/
+}
+.timeScore{
+display:flex;
+flex-direction:row;
+justify-content:space-between;
+}
+hr{
+margin-left:0 auto;
+width:90%;
+}
+.bugs{
+text-align:left;
+color:red;
+padding-left:2.94117647058%; /*10px/340px*/
+}
+a{
+color:#ffffff;
+text-decoration:none;
+}
+.targetScore{
+display:flex;
+flex-direction:row;
+justify-content:space-between;
+}
+</style>
+</head>
+<body>
+<div class="targetScore">
+<a href="file:///storage/emulated/0/bugHelp.html"><h2>Help</h2></a>
+<p>Target Score : 15</p>
+</div>
+<h4><b>Bug Squasher</b></h4>
+<div class="timeScore" >
+<p id="timer"> </p>
+<p id="score"></p>
+</div>
+<hr>
+<div class="bugs">
+<i id="bug1"  class="fa-solid fa-bug"></i>
+<!--
+<i id="bug2"  onclick="increaseScore()" class="fa-solid fa-bug"></i>
+<i id="bug3"  onclick="increaseScore()" class="fa-solid fa-bug"></i>
+-->
+</div>
+<script type="text/javascript">
+let timer = document.querySelector("#timer");
+let score = document.querySelector("#score");
+let bug1 = document.querySelector("#bug1");
+let bug2 = document.querySelector("#bug2");
+let bug3 = document.querySelector("#bug3");
+let maxWidth = window.innerWidth-40;
+let maxHeight = window.innerHeight-20;
+let helpBar = document.querySelector("#help");
+
+var time = 25;
+timer.innerHTML = "Time remaining : " + time;
+
+function decreaseTime(){
+timer.innerHTML = "Time remaining : " + --time;
+
+if(time == 0){
+clearInterval(decrease);
+
+if(scoreValue >= 15){
+alert("Hurray!, Bugs destroyed");
+replay();
+}
+else if(time <= 0 && scoreValue <= 14){
+alert("Oh no,the bugs won \n \n Try again?!!");
+score.innerHTML = "Score : " + scoreValue;
+replay();
+}
+}
+}
+var decrease = setInterval(decreaseTime,1000);
+
+bug1.addEventListener("click",increaseScore);
+
+var scoreValue = 0;
+score.innerHTML = "Score : " + scoreValue;
+function increaseScore(){
+score.innerHTML = "Score : " + ++scoreValue;
+}
+
+function spawnBug(){
+bug1.style.transform = "translate("+Math.random()*maxWidth +"px" + "," +Math.random()*maxHeight+"px" + ")";
+//bug2.style.transform = "translate("+Math.floor(Math.random()*maxWidth) +"px" + "," +Math.floor(Math.random()*maxHeight)+"px" + ")";
+//bug3.style.transform = "translate("+Math.floor(Math.random()*maxWidth) +"px" + "," +Math.floor(Math.random()*maxHeight)+"px" + ")";
+}
+
+var bugs = setInterval(spawnBug,700);
+
+function replay(){
+location.reload();
+}
+
+
+</script>
+</body>
+</html>
